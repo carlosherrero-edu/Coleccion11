@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 class PilaTest {
@@ -51,6 +52,19 @@ class PilaTest {
 		Integer elem2= pilaPrueba.eliminar();
 		assertTrue(elem2.intValue()==200);
 		assertTrue(pilaPrueba.cuantos()==1);
+	}
+	
+	
+	@Test
+	@DisplayName("Extraemos todos los elementos de la pila")
+	void testDejarPilaVacia() {
+		pilaPrueba.eliminar();
+		pilaPrueba.eliminar();
+		pilaPrueba.eliminar();
+		assertNull(pilaPrueba.eliminar());
+		assertTrue(pilaPrueba.cuantos()==0);
+		
+		
 	}
 
 	
