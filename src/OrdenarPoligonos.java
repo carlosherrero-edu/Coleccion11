@@ -12,11 +12,11 @@ import plantillas.*;
  * @author Carlos Herrero
  *
  */
-class DefinirOrden implements Comparator<Poligono>{
+class DefinirOrden implements Comparator<PoligonoSinComparator>{
 	
 	//sólo codificamos el método compare()
 	@Override
-	public int compare(Poligono o1, Poligono o2) {
+	public int compare(PoligonoSinComparator o1, PoligonoSinComparator o2) {
 		int resultado;
 		if (o1.getNum_lados() <o2.getNum_lados()) {
 			resultado=-1;
@@ -33,33 +33,30 @@ class DefinirOrden implements Comparator<Poligono>{
 		return resultado;
 	}
 	
-}
+} //fin de la clase DefinirOrden
 
 public class OrdenarPoligonos {
 	
 	
-	//lista estáticoa con los polígonos que guardaremos
-	static ArrayList<Poligono> listaPoligonos;
+	//lista estática con los polígonos que guardaremos
+	static ArrayList<PoligonoSinComparator> listaPoligonos=new ArrayList<>();
 	
-	//constructor
-	public OrdenarPoligonos() {
-		listaPoligonos= new ArrayList<>();
-	}
+	
 	
 	//método para rellenar la lista
 	static void rellenarLista() {
-		listaPoligonos.add(new Poligono(5,20));
-		listaPoligonos.add(new Poligono(8,30));
-		listaPoligonos.add(new Poligono(3,50));
-		listaPoligonos.add(new Poligono(3,20));
-		listaPoligonos.add(new Poligono(8,45));
-		listaPoligonos.add(new Poligono(5,45));
-		listaPoligonos.add(new Poligono(8,20));
+		listaPoligonos.add(new PoligonoSinComparator(5,20));
+		listaPoligonos.add(new PoligonoSinComparator(8,30));
+		listaPoligonos.add(new PoligonoSinComparator(3,50));
+		listaPoligonos.add(new PoligonoSinComparator(3,20));
+		listaPoligonos.add(new PoligonoSinComparator(8,45));
+		listaPoligonos.add(new PoligonoSinComparator(5,45));
+		listaPoligonos.add(new PoligonoSinComparator(8,20));
 	}
 	
 	//método para imprimir la lista
 	static void mostrarLista() {
-		for (Poligono poli: listaPoligonos) {
+		for (PoligonoSinComparator poli: listaPoligonos) {
 			System.out.println(poli.toString());
 		}
 	}
@@ -67,8 +64,10 @@ public class OrdenarPoligonos {
 	public static void main(String[] args) {
 		rellenarLista();
 		
+		
 		//ordenamos la lista pasando un objeto creado al vuelo de la clase DefinirOrden
 		Collections.sort(listaPoligonos, new DefinirOrden());
+		//Collections.sort(listaPoligonos);
 		
 		mostrarLista();
 

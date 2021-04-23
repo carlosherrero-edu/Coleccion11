@@ -5,7 +5,7 @@ package plantillas;
  * @version 1.0
  * Clase Alumno con un array de calificaciones y un metodo de cálculo de nota media
  */
-public class Alumno {
+public class Alumno implements Comparable<Alumno> {
 	
 	//propiedades
 	private int nia;
@@ -64,6 +64,20 @@ public class Alumno {
 			return suma/num_asig;
 		} else
 			return -1; //condicion de error
+	}
+
+	@Override
+	public int compareTo(Alumno o) {
+		if (this.getNotaMedia() < o.getNotaMedia()) {
+			return -1;
+		} else {
+			if (this.getNotaMedia() > o.getNotaMedia()) {
+				return 1;
+			} else {
+				return 0;
+			}
+	}
+		
 	}
 	
 	
