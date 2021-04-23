@@ -1,6 +1,7 @@
 package ejercicio11;
 
 import java.io.File;
+import java.util.Formatter;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
@@ -13,7 +14,12 @@ import java.util.TreeMap;
  */
 public class ContarPalabras {
 	
+	
 	static final String RUTA_FICHERO="C:/Users/Alumno/Documents/muestra.txt";
+	static final String RUTA_SALIDA="C:/Users/Alumno/Documents/resultado.txt";
+	/* es mucho mejor usar una ruta local a la aplicación, como la siguiente:
+	 * static final String RUTA_FICHERO="files/muestra.txt";
+	 */
 	
 	
 	/**
@@ -36,6 +42,40 @@ public class ContarPalabras {
 			}
 			teclado.close();
 			return texto;
+
+		} catch (Exception e) {
+			throw e;
+
+		}
+
+	}
+	
+	/**
+	 * Método para escribir el contenido del diccionario en un fichero usando la clase Formatter
+	 * 
+	 * @param ruta cadena con la ruta  al fichero de texto destino
+	 * @param diccio   diccionario/Map con los pares palabras-ocurrencias que escribiremos en el fichero
+	 * @throws Exception si no existe el fichero, hay errores con el objeto
+	 *                   Escáner...
+	 */
+	static void escribirEnFichero(String ruta, TreeMap<String, Integer> diccio) throws Exception {
+
+		try {
+			// definimos un objeto File que señale al fichero de origen
+			File fichero = new File(ruta);
+			// definimos e instanciamos un flujo de tipo Formatter que tome como entrada la
+			// referencia al fichero
+			Formatter salida=new Formatter(fichero);
+			Set<String> lista_palabras = diccio.keySet();
+
+			//recorremos el diccionario iterando sobre lista_palabras
+			//guardamos lso pares   "palabra/ocurrencia" en el fichero
+			for (String palabra : lista_palabras) {
+				salida.format("%20s\t\t%d%n", palabra, diccio.get(palabra));
+			}
+			//cerramos los recursos utilizados
+			salida.close();
+			
 
 		} catch (Exception e) {
 			throw e;
@@ -72,6 +112,10 @@ public class ContarPalabras {
 
 	
 
+	/**
+	 * Módulo principal /controlador de nuestra aplicación
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		String frase="";
@@ -95,6 +139,16 @@ public class ContarPalabras {
 
 		// mostramos resultados
 		mostrarDiccionario(diccio);
+		
+		//los guardamos en un fichero
+				try {
+					escribirEnFichero(RUTA_SALIDA,diccio);
+
+				} catch (Exception e) {
+					// imprimimos el error 
+					e.printStackTrace();
+					
+				}
 
 	} // fin del metodo main
 
