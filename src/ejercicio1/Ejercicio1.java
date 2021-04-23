@@ -64,7 +64,8 @@ public class Ejercicio1 {
 	public static double mediaLista(List<Integer> lista) {
 		double media = 0;
 		
-		media = (sumaLista(lista)/lista.size());
+		//ATENCIÖN: Hay que forzar un "casting" a double para que la división no se realice como entera
+		media = (double)sumaLista(lista)/lista.size();
 		return media;
 	}
 	
