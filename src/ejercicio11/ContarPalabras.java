@@ -29,23 +29,22 @@ public class ContarPalabras {
 	 * @throws Exception si no existe el fichero, hay errores con el objeto Escáner...
 	 */
 	static String leerDeFichero(String ruta) throws Exception {
-
-		try {
-			//definimos un objeto File que señale al fichero de origen
-			File fichero = new File(ruta);
-			//definimos e instanciamos un objeto Scanner que tome como entrada la referencia al fichero
-			Scanner teclado = new Scanner(fichero);
+		//definimos un objeto File que señale al fichero de origen
+		File fichero = new File(ruta);
+		//definimos e instanciamos un objeto Scanner que tome como entrada la referencia al fichero
+		try  (Scanner teclado = new Scanner(fichero)){
+			
+		
 			String texto = "";
 			//leemos el contenido del fichero línea a línea y lo agregamos a la cadena de texto a devolver
-			while (teclado.hasNext()) {
+			while (teclado.hasNextLine()) {
 				texto = texto + teclado.nextLine() + "\n";
 			}
-			teclado.close();
+	
 			return texto;
 
 		} catch (Exception e) {
 			throw e;
-
 		}
 
 	}
@@ -94,10 +93,25 @@ public class ContarPalabras {
 	 * @param texto  cadena de texto de la que se desean separar las palabras
 	 */
 	static void rellenarDiccionario(TreeMap<String, Integer> diccio, String texto) {
-
 		
-
-	}
+		//Divido el texto en palabras
+		String [] palabras = texto.split("[\\p{Space}\\p{Punct}]\\p{Space}*");
+		// recorro el array
+		for (int i=0; i<palabras.length; i++) {
+			//veo si tengo esa palabra en el diccionario
+			String clave=palabras[i].toUpperCase();  //convierto la clave a mayúscula
+			if (!diccio.containsKey(clave)) {
+				//si no tengo esa palabra en el diccionario...
+				diccio.put(clave, Integer.valueOf(1));
+			}  else {//en caso contrario, si ya la tengo, incremento el número de veces que ha aparecido
+				int rep= diccio.get(clave);
+				diccio.put(clave, Integer.valueOf(rep+1));
+			} 
+		
+				
+			} //fin del bucle for
+		}
+	
 
 	/**
 	 * Método que muestra la lista de palabras ordenadas, junto con sus frecuencias
@@ -105,6 +119,12 @@ public class ContarPalabras {
 	 * @param diccio objeto TreeMap con la lista de palabras y sus frecuencias
 	 */
 	static void mostrarDiccionario(TreeMap<String, Integer> diccio) {
+		
+		Set<String> lista= diccio.keySet();
+		
+		for (String elem: lista) {
+			System.out.println(elem+ " \t "+ diccio.get(elem));
+		}
 
 		
 
