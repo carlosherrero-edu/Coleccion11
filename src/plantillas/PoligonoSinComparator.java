@@ -1,7 +1,7 @@
 package plantillas;
 
 
-public class Poligono implements Comparable<Poligono>{
+public class PoligonoSinComparator{
 	
 	//propiedades
 	private int num_lados;
@@ -10,12 +10,12 @@ public class Poligono implements Comparable<Poligono>{
 	
 	
 	//constructores
-	public Poligono (int num_lados, double lado){
+	public PoligonoSinComparator (int num_lados, double lado){
 		this.setLado(lado);
 		this.setNum_lados(num_lados);
 	}
 	
-	public Poligono (int num_lados, double lado, double posX, double posY){
+	public PoligonoSinComparator (int num_lados, double lado, double posX, double posY){
 		this (num_lados, lado);
 		this.setPosX(posX);
 		this.setPosY(posY);
@@ -65,22 +65,6 @@ public class Poligono implements Comparable<Poligono>{
 		return " [Lados: "+this.getNum_lados()+ " * Perimetro: " + this.damePerimetro()+"]";
 	}
 
-	@Override
-	public int compareTo(Poligono o) {
-		int resultado;
-		if (this.getNum_lados() <o.getNum_lados()) {
-			resultado=-1;
-		} else if (this.getNum_lados() > o.getNum_lados()) {
-			resultado=+1;
-		} else {
-			//decidir en función de la longitud del lado
-			Double longitud1= Double.valueOf(this.getLado());
-			Double longitud2= Double.valueOf(o.getLado());
-			resultado= longitud1.compareTo(longitud2);
-			
-			
-		}
-		return resultado;
-	}
+	
 
 } //fin de la clase

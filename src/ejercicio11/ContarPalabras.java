@@ -38,7 +38,7 @@ public class ContarPalabras {
 			String texto = "";
 			//leemos el contenido del fichero línea a línea y lo agregamos a la cadena de texto a devolver
 			while (teclado.hasNextLine()) {
-				texto = texto + teclado.nextLine() + "\n";
+				texto = texto + teclado.nextLine().trim() + "\n";
 			}
 	
 			return texto;
@@ -99,7 +99,7 @@ public class ContarPalabras {
 		// recorro el array
 		for (int i=0; i<palabras.length; i++) {
 			//veo si tengo esa palabra en el diccionario
-			String clave=palabras[i].toUpperCase();  //convierto la clave a mayúscula
+			String clave=palabras[i].trim().toUpperCase();  //convierto la clave a mayúscula
 			if (!diccio.containsKey(clave)) {
 				//si no tengo esa palabra en el diccionario...
 				diccio.put(clave, Integer.valueOf(1));
