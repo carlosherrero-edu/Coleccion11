@@ -45,10 +45,17 @@ public class ProbarLinkedList {
 			System.out.printf(" Ahora tengo en lista  %d  pol�gonos%n ", miLista.size());
 			
 			//los voy a mostrar:
-			System.out.println("*** Contenido de la lista con un For ***");
-			for (Poligono poli: miLista){
-				System.out.println(poli);
-			}
+//			System.out.println("*** Contenido de la lista con un For ***");
+//			for (Poligono poli: miLista){
+//				System.out.println(poli.toString());
+//			}
+			
+//			ListIterator<Poligono> li= miLista.listIterator(0);
+//			
+//			while (li.hasNext()){
+//				System.out.println(li.next().toString());
+//				
+//			}
 			
 			//otra forma de mostrarlos, con un iterador
 			System.out.println("*** Contenido de la lista con un Iterator ***");
@@ -58,16 +65,16 @@ public class ProbarLinkedList {
 				System.out.println(it.next().toString());
 				
 			}
-			
-			//podemos tambi�n recorrerlo al rev�s, con un ListIterator
-			System.out.println("*** Contenido de la lista con un ListIterator ***");
-			ListIterator<Poligono> li = miLista.listIterator(miLista.size());
-			
-			while (li.hasPrevious())
-			{
-				System.out.println(li.previous().toString());
-			}
-			
+////			
+//			//podemos tambi�n recorrerlo al rev�s, con un ListIterator
+//			System.out.println("*** Contenido de la lista con un ListIterator ***");
+//			ListIterator<Poligono> li = miLista.listIterator(3);
+//			
+//			while (li.hasPrevious())
+//			{
+//				System.out.println(li.previous().toString());
+//			}
+////			
 			//pruebo los métodos de LinkedList pop() y push() para gestionar una pila
 			System.out.println("Quito del comienzo el elemento..." + miLista.pop());
 			System.out.println("Quito del comienzo el elemento..." + miLista.pop());
