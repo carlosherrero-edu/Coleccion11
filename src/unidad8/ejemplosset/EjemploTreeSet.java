@@ -46,24 +46,24 @@ public class EjemploTreeSet {
 		 * Se puede definir la referencia de tipo TreeSet o SortedSet, 
 		 * pero no de tipo Set, pues perderíamos los métodos propios de los Set ordenados
 		 */
-		SortedSet<String> listaUnicos = new TreeSet<String>(lista);
+		TreeSet<String> listaUnicos = new TreeSet<String>(lista);
 
 		// se imprimen los elementos de la lista
 		System.out.println("\n\nValores no repetidos de la lista");
 		imprimirColeccion(listaUnicos);
 		System.out.println("\n Elementos en la lista: " + listaUnicos.size());
 
-		// probamos los métodos específicos de TreeSet
+//		// probamos los métodos específicos de TreeSet
 		System.out.println("Primer elemento :" + listaUnicos.first());
 		System.out.println("Último elemento :" + listaUnicos.last());
-
-		// imprimimos los elementos que preceden a "insecto"
-		System.out.println("\n\nElementos que preceden a \"insecto\"");
-		imprimirColeccion(listaUnicos.headSet("insecto"));
-
-		// imprimimos los elementos que siguen a "insecto"
-		System.out.println("\n\nElementos a continuación de  \"insecto\"");
-		imprimirColeccion(listaUnicos.tailSet("insecto"));
+//
+//		// imprimimos los elementos que preceden a "insecto"
+System.out.println("\n\nElementos que preceden a \"insecto\"");
+imprimirColeccion(listaUnicos.headSet("insecto",true));
+//
+//		// imprimimos los elementos que siguen a "insecto"
+System.out.println("\n\nElementos a continuación de  \"insecto\"");
+	imprimirColeccion(listaUnicos.tailSet("insecto", false));
 
 	} // fin eliminaDuplicados
 
