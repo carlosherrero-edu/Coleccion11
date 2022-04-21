@@ -18,7 +18,7 @@ class ColaTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		colaPrueba=new Cola<Integer>();
+		colaPrueba=new Cola<>();
 		colaPrueba.agregar(100);
 		colaPrueba.agregar(200);
 		colaPrueba.agregar(300);
@@ -75,6 +75,19 @@ class ColaTest {
 		assertTrue(colaPrueba.cuantos()==0);
 		
 		
+	}
+	
+	@Test
+	@Order(5)
+	@DisplayName("Probamos que los nodos de la cola se listan correctamente")
+	void testListarCola() {
+	
+		String[] lineas= colaPrueba.toString().split("\n");
+		System.out.println(colaPrueba.toString());
+		assertTrue(lineas[0].contains("100"));
+		assertTrue(lineas[1].contains("200"));
+		assertTrue(lineas[2].contains("300"));
+	
 	}
 	
 

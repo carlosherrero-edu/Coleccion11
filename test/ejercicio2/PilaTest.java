@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 class PilaTest {
@@ -26,7 +26,7 @@ class PilaTest {
 	}
 
 	@Test
-	@DisplayName("Probando la agregación de un elemento")
+	@DisplayName("Probando la agregaciï¿½n de un elemento")
 	void testAgregar() {
 		pilaPrueba.agregar(400);
 		assertTrue(pilaPrueba.cuantos()==4);
@@ -35,7 +35,7 @@ class PilaTest {
 	
 
 	@Test
-	@DisplayName("Probando que se elige correctamente el siguiente método en salir")
+	@DisplayName("Probando que se elige correctamente el siguiente mï¿½todo en salir")
 	void testProximoEnSalir() {
 		String elem=pilaPrueba.proximoEnSalir();
 		assertTrue(elem.contains("300"));
@@ -63,6 +63,20 @@ class PilaTest {
 		pilaPrueba.eliminar();
 		assertNull(pilaPrueba.eliminar());
 		assertTrue(pilaPrueba.cuantos()==0);
+		
+		
+	}
+	
+	@Test
+	@Order(5)
+	@DisplayName("Probamos que los nodos de la cola se listan correctamente")
+	void testListarPila() {
+	
+		String[] lineas= pilaPrueba.toString().split("\n");
+	
+		assertTrue(lineas[0].contains("100"));
+		assertTrue(lineas[1].contains("200"));
+		assertTrue(lineas[2].contains("300"));
 		
 		
 	}
