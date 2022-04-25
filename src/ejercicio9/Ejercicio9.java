@@ -13,7 +13,7 @@ public class Ejercicio9 {
 		System.out.println("Escribe tu frase");
 		String frase= teclado.nextLine();
 		
-		String[] palabras= frase.split(SEPARADOR);
+		String[] palabras= frase.toLowerCase().split(SEPARADOR);
 		
 		
 		for (String termino: palabras) {
