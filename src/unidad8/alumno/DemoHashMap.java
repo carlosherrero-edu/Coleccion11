@@ -1,8 +1,10 @@
 package unidad8.alumno;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class DemoHashMap {
 
@@ -31,39 +33,45 @@ public class DemoHashMap {
 		Alumno[] arrayAlu = { alu3, alu2, alu6, alu1, alu5, alu4 };
 
 		// defino el haspmap de Alumnos
-		Map<Integer, Alumno> miTabla = new HashMap<Integer, Alumno>();
+		Map<String, Alumno> miTabla = new TreeMap<String, Alumno>();
 
 		// voy guardando los alumnos en el hashMap por su clave nia
 		// notar que encapsulamos el nia en la clase envolvente Integer
 
 		for (Alumno alu : arrayAlu) {
-			miTabla.put(Integer.valueOf(alu.getNia()), alu);
+			miTabla.put(alu.getApellidos(), alu);
 			System.out.format(" %n Alumno con Nia %d correctamente agregado ", alu.getNia());
 		}
+		
+		System.out.println("Número de alumnos en el diccioinario "+miTabla.size());
 
-		// guardo un nuevo elemento, comprobando antes que no existe por la clave
-		if (miTabla.containsKey(Integer.valueOf(alu7.getNia()))) {
-			System.out.format(" %n El alumno con nia %d ya existe ", alu7.getNia());
-		} else { // el alumno no existe, puedo a�adirlo
-			miTabla.put(Integer.valueOf(alu7.getNia()), alu7);
-			System.out.format(" %n Alumno con Nia %d correctamente agregado ", alu7.getNia());
-		}
-
+//		// guardo un nuevo elemento, comprobando antes que no existe por la clave
+//		if (miTabla.containsKey(Integer.valueOf(alu7.getNia()))) {
+//			System.out.format(" %n El alumno con nia %d ya existe ", alu7.getNia());
+//		} else { // el alumno no existe, puedo a�adirlo
+//			miTabla.put(Integer.valueOf(alu7.getNia()), alu7);
+//			System.out.format(" %n Alumno con Nia %d correctamente agregado ", alu7.getNia());
+//		}
+		
+		System.out.println("Número de alumnos en el diccioinario "+miTabla.size());
 		// pero no necesito comprobarlo, pues no se guardan elementos duplicados por la
 		// clave
-		miTabla.put(Integer.valueOf(alu7.getNia()), alu7);
+		miTabla.put(alu7.getApellidos(), alu7);
 
+		System.out.println("Número de alumnos en el diccioinario "+miTabla.size());
 		// recorremos los elementos del mapa, bas�ndonos en el set de sus claves
-		Set<Integer> listaClaves = miTabla.keySet();
+		Set<String> listaClaves = miTabla.keySet();
 
-		for (Integer clave : listaClaves) {
-			System.out.format("%n\tNIA:  %d***Apellidos y Nombre: %-20s *** Nota media: %.2f", clave.intValue(),
+		for (String clave : listaClaves) {
+			
+			System.out.format("%n\tNIA:  %d***Apellidos y Nombre: %-20s *** Nota media: %.2f", 
+					miTabla.get(clave).getNia(),
 					miTabla.get(clave).getApellidos() + " " + miTabla.get(clave).getNombre(),
 					miTabla.get(clave).getNotaMedia());
 
 		}
-
-		System.out.println("\nNumero de alumnos: " + miTabla.size());
+//
+//		System.out.println("\nNumero de alumnos: " + miTabla.size());
 
 	}
 
