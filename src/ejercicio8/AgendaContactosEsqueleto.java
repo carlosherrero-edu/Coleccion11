@@ -1,5 +1,6 @@
 package ejercicio8;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -50,7 +51,19 @@ public class AgendaContactosEsqueleto {
 	 */
 	static public boolean agregarContacto(String nombre, String apellidos, String telefono) {
 
-		return false;
+		// primero valido los campos
+		if (!(validarNombre(nombre) && validarNombre(apellidos) && validarTelefono(telefono))) {
+			throw new IllegalArgumentException("Hay campos incorrectos, por favor revísalos...");
+
+		}
+		// compruebo que no está en la agenda
+		if (existeContacto(apellidos, nombre)) {
+			return false;
+		} else {
+			String clave = apellidos.toUpperCase() + " " + nombre.toUpperCase();
+			agendaContactos.put(clave, telefono);
+			return true;
+		}
 
 	}// fin del método
 
@@ -61,8 +74,18 @@ public class AgendaContactosEsqueleto {
 	 */
 
 	static public void listarAgenda() {
+		if (agendaContactos.isEmpty()) {
+			System.out.println("La agenda está vacía");
+			return;
+		}
+		Set<String> nombres = agendaContactos.keySet();
 
-		
+		System.out.format("\n%30s   %15s", "Apellidos y Nombre", "Teléfono");
+		System.out.format("\n%30s   %15s", "------------------------------", "--------------");
+		for (String nombre : nombres) {
+
+			System.out.format("\n%30s   %15s", nombre, agendaContactos.get(nombre));
+		}
 
 	}// fin del método
 
@@ -72,22 +95,78 @@ public class AgendaContactosEsqueleto {
 	 * @param apellidos apellido del contacto que deseamos buscar
 	 * @return informaciÃ³n del contacto -si existe- o cadena vacÃ­a- si no existe-
 	 */
-	static public List<String> localizarContacto(String apellidos) {
+	static public List<String> localizarContacto(String patron) {
+		List<String> listaContactos = new ArrayList<>();
 
-		return null;
+
+		if (!agendaContactos.isEmpty()) {
+				//obtengo la lista de todas las claves
+
+			Set<String> nombres = agendaContactos.keySet();
+			
+			// hago un iterador y compruebo si la clave se ajusta al patrón de búsqueda
+			for (String nombre : nombres) {
+				if (nombre.matches(patron)) {
+					listaContactos.add(String.format("\n%30s   %15s", nombre, agendaContactos.get(nombre)));
+				}
+
+			} // fin del bucle for
+
+		} 
+		return listaContactos;
 	}
 
 	static public String localizarTelefono(String telefono) {
-		return null;
+		String resultado;
+		if (agendaContactos.isEmpty()) {
+
+			resultado = "La agenda está vacía";
+		} else {
+			// obtengo la lista de todas las claves
+
+			Set<String> nombres = agendaContactos.keySet();
+			resultado = "Teléfono no encontrado";
+			// hago un iterador hasta que encuentre el teléfono que busco
+			for (String nombre : nombres) {
+
+				if (agendaContactos.get(nombre).equals(telefono)) {
+					resultado = String.format("El teléfono %s pertenece a %s", telefono, nombre);
+					break;
+				}
+
+			} // fin del bucle
+
+		}
+		return resultado;
 	}
 
 	static public boolean actualizarContacto(String nombre, String apellidos, String telefono) {
-		return false;
+		// primero valido los campos
+		if (!validarTelefono(telefono)) {
+			throw new IllegalArgumentException("Por favor, revisa el teléfono...");
+
+		}
+		// compruebo que no está en la agenda
+		if (existeContacto(apellidos, nombre)) {
+			String clave = apellidos.toUpperCase() + " " + nombre.toUpperCase();
+			agendaContactos.replace(clave, telefono);
+			return true;
+		} else {
+			// no existe el contacto, no puedo actualizar
+			return false;
+		}
 	}
 
 	static public boolean eliminarContacto(String nombre, String apellidos) {
 
-		return false;
+		if (existeContacto(apellidos, nombre)) {
+			String clave = apellidos.toUpperCase() + " " + nombre.toUpperCase();
+			agendaContactos.remove(clave);
+			return true;
+		} else {
+			// no existe el contacto, no puedo eliminar
+			return false;
+		}
 	}
 
 	static boolean existeContacto(String apellidos, String nombre) {
@@ -116,6 +195,8 @@ public class AgendaContactosEsqueleto {
 
 	public static void main(String[] args) {
 		int opcion;
+		String nombre, apellidos, telefono;
+		List<String> listaContactos;
 
 		// la estructura do-while permite que utilice sucesivamente
 		// el programa mientras no elija la última opción
@@ -125,28 +206,76 @@ public class AgendaContactosEsqueleto {
 
 			switch (opcion) {
 			case 1:
-				// TODO
+				System.out.println("Escribe la información del nuevo contacto");
+				System.out.print("Nombre: >>");
+				nombre = lector.next();
+				System.out.print("\nApellido: >>");
+				apellidos = lector.next();
+				System.out.print("\nTeléfono: >>");
+				telefono = lector.next();
+				
+				if (agregarContacto(nombre,apellidos,telefono)) {
+					System.out.println("Se ha agregado el contacto a la agenda");
+				}else {
+					System.out.println("Este contacto ya está en la agenda");
+				}
 				break;
 
 			case 2:
-				// TODO
-
+				listarAgenda();
 				break;
 
 			case 3:
-				// TODDO
+				System.out.println("Escribe el nombre, apellidos o una parte de los mismos");
 
+				String cadena = lector.next();
+				listaContactos=localizarContacto(cadena.toUpperCase());
+				if (listaContactos.isEmpty()) {
+					System.out.println("No hay ningún contacto con esa cadena en el nombre/apellidos");
+				} else {
+					System.out.format("\n%30s   %15s", "Apellidos y Nombre", "Teléfono");
+					System.out.format("\n%30s   %15s", "------------------------------", "--------------");
+					for (String elemento:listaContactos) {
+						System.out.println(elemento);
+					}
+				}
 				break;
 
 			case 4:
 
-				// TODO
+				System.out.println("Escribe el teléfono que quieres buscar");
+
+				System.out.print("\n Teléfono: >>");
+				telefono = lector.next();
+				System.out.println(localizarTelefono(telefono));
 				break;
+
 			case 5:
-				// TODO
+				System.out.println("Escribe la información del contacto que vamos a actualizar");
+				System.out.print("Nombre: >>");
+				nombre = lector.next();
+				System.out.print("\n Apellido: >>");
+				apellidos = lector.next();
+				System.out.print("\n Nuevo Teléfono: >>");
+				telefono = lector.next();
+				if (actualizarContacto(nombre,apellidos,telefono)) {
+					System.out.println("Se ha actualizado el teléfono de " +nombre+" "+apellidos);
+				}else {
+					System.out.println("No se ha encontrado en la agenda a esta persona");
+				}
 				break;
+				
 			case 6:
-				// TODO
+				System.out.println("Escribe el nombre y apellidos del contacto a eliminar:");
+				System.out.print("Nombre: >>");
+				nombre = lector.next();
+				System.out.print("\n Apellido: >>");
+				apellidos = lector.next();
+				if (eliminarContacto(nombre,apellidos)) {
+					System.out.println("Se ha eliminado de la agenda a  " +nombre+" "+apellidos);
+				}else {
+					System.out.println("No se ha encontrado en la agenda a esta persona");
+				}
 				break;
 
 			}
