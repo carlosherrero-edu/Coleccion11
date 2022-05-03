@@ -1,5 +1,7 @@
 package unidad8.agenda;
 
+import ejercicio8.AgendaContactos;
+
 public class ProbarAgendaContactos {
 
 	public static void main(String[] args) {

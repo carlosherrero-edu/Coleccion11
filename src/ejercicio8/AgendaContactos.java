@@ -6,13 +6,17 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class AgendaContactosEsqueleto {
+public class AgendaContactos {
 
 	// objeto mapa donde vamos a guardar todos los contactos, ordenados por
 	// apellidos
 	static TreeMap<String, String> agendaContactos = new TreeMap<>();
 	static Scanner lector = new Scanner(System.in);
 
+	/**
+	 * Método para mostrar el menú de opciones de la aplicación y recoger una opción
+	 * @return entero con la opción elegida por el usuario
+	 */
 	static int mostrarMenu() {
 
 		int eleccion;
@@ -42,12 +46,11 @@ public class AgendaContactosEsqueleto {
 	/*
 	 * MÃ©todo para agregar un nuevo contacto a la agenda
 	 * 
-	 * @param nombre
-	 * 
-	 * @param apellidos
-	 * 
-	 * @param telefono Agrega un nuevo contacto a la agenda, o lo sobreescribe si ya
-	 * hay otro contacto con el mismo apellido
+	 * @param nombre cadena con el nombre (al menos 3 caracteres)
+	 * @param apellidos cadena con el nombre (al menos 3 caracteres)
+	 * @param telefono cadena con el teléfono (al menos 9 dígitos)
+	 * @return Verdadero si el contacto no existía en la agenda y se pudo agregar, Falso en otro caso
+	 * @throws IllegalArgumentException si alguno de los campos no cumple la condición de validación 
 	 */
 	static public boolean agregarContacto(String nombre, String apellidos, String telefono) {
 
@@ -89,11 +92,11 @@ public class AgendaContactosEsqueleto {
 
 	}// fin del método
 
+	
 	/**
-	 * MÃ©todo que busca y recupera un contacto en la agenda
-	 * 
-	 * @param apellidos apellido del contacto que deseamos buscar
-	 * @return informaciÃ³n del contacto -si existe- o cadena vacÃ­a- si no existe-
+	 * Método para buscar contactos en la agenda por un patrón de búsqueda
+	 * @param patron cadena buscada, puede ser una parte del nombre o apellido
+	 * @return Lista con todos los contactos cuyo nombre y/o apellido contienen la cadena buscada
 	 */
 	static public List<String> localizarContacto(String patron) {
 		List<String> listaContactos = new ArrayList<>();
@@ -106,7 +109,9 @@ public class AgendaContactosEsqueleto {
 			
 			// hago un iterador y compruebo si la clave se ajusta al patrón de búsqueda
 			for (String nombre : nombres) {
-				if (nombre.matches(patron)) {
+			
+			
+				if (nombre.contains(patron)) {
 					listaContactos.add(String.format("\n%30s   %15s", nombre, agendaContactos.get(nombre)));
 				}
 
@@ -116,6 +121,11 @@ public class AgendaContactosEsqueleto {
 		return listaContactos;
 	}
 
+	/**
+	 * Método para localizar un contacto por el número de teléfono
+	 * @param telefono Cadena con el número de teléfono a buscar
+	 * @return Cadena con los datos del contacto al que pertenece ese número de teléfono, si se encuentra
+	 */
 	static public String localizarTelefono(String telefono) {
 		String resultado;
 		if (agendaContactos.isEmpty()) {
@@ -140,12 +150,16 @@ public class AgendaContactosEsqueleto {
 		return resultado;
 	}
 
+	/**
+	 * Método para actualizar el número de teléfono de un contacto ya existente
+	 * @param nombre Cadena con el nombre del contacto a actualizar
+	 * @param apellidos Cadena con los apellidos
+	 * @param telefono Cadena con el nuevo número de teléfono
+	 * @return Verdadero si se encuentra el contacto  y se puede sustituir su teléfono, Falso en caso contrario
+	 */
 	static public boolean actualizarContacto(String nombre, String apellidos, String telefono) {
-		// primero valido los campos
-		if (!validarTelefono(telefono)) {
-			throw new IllegalArgumentException("Por favor, revisa el teléfono...");
+		// el teléfono ya nos llega validado; no es necesario volverlo a comprobar
 
-		}
 		// compruebo que no está en la agenda
 		if (existeContacto(apellidos, nombre)) {
 			String clave = apellidos.toUpperCase() + " " + nombre.toUpperCase();
@@ -157,6 +171,12 @@ public class AgendaContactosEsqueleto {
 		}
 	}
 
+	/**
+	 * Método para eliminar un contacto de la agenda
+	 * @param nombre Cadena con el nombre
+	 * @param apellidos Cadena con el apellido del contacto a eliminar
+	 * @return Verdadero si se encontraba en la agenda y se pudo eliminar, Falso en otro caso
+	 */
 	static public boolean eliminarContacto(String nombre, String apellidos) {
 
 		if (existeContacto(apellidos, nombre)) {
@@ -169,6 +189,12 @@ public class AgendaContactosEsqueleto {
 		}
 	}
 
+	/**
+	 * Método para comprobar si un contacto existe ya en la agenda
+	 * @param apellidos apellido del contacto
+	 * @param nombre nombre del Contacto
+	 * @return Verdadero si ya existe en la agenda, Falso en otro caso
+	 */
 	static boolean existeContacto(String apellidos, String nombre) {
 		if (agendaContactos.containsKey(apellidos.toUpperCase() + " " + nombre.toUpperCase())) {
 			return true;
@@ -177,6 +203,11 @@ public class AgendaContactosEsqueleto {
 		}
 	}
 
+	/**
+	 * Método para validar un nombre o apellido
+	 * @param nombre Cadena a validar
+	 * @return Verdadero si al menos tiene 3 caracteres, Falso en otro caso
+	 */
 	static boolean validarNombre(String nombre) {
 		if (nombre.trim().length() >= 3) {
 			return true;
@@ -185,6 +216,11 @@ public class AgendaContactosEsqueleto {
 		}
 	}
 
+	/**
+	 * Método para validar un número de teléfono
+	 * @param telefono Cadena con el número de teléfono
+	 * @return Verdadero si consta de al menos 9 dígitos, Falso en otro caso
+	 */
 	static boolean validarTelefono(String telefono) {
 		if (telefono.matches("^\\d{9,}$")) {
 			return true;
@@ -195,7 +231,7 @@ public class AgendaContactosEsqueleto {
 
 	public static void main(String[] args) {
 		int opcion;
-		String nombre, apellidos, telefono;
+		String nombre, apellidos, telefono="";
 		List<String> listaContactos;
 
 		// la estructura do-while permite que utilice sucesivamente
@@ -206,19 +242,31 @@ public class AgendaContactosEsqueleto {
 
 			switch (opcion) {
 			case 1:
-				System.out.println("Escribe la información del nuevo contacto");
-				System.out.print("Nombre: >>");
-				nombre = lector.next();
-				System.out.print("\nApellido: >>");
-				apellidos = lector.next();
-				System.out.print("\nTeléfono: >>");
-				telefono = lector.next();
 				
-				if (agregarContacto(nombre,apellidos,telefono)) {
-					System.out.println("Se ha agregado el contacto a la agenda");
-				}else {
-					System.out.println("Este contacto ya está en la agenda");
+				boolean repetir=true;
+				//el bucle se repite hasta que se introduzca un contacto con los campos válidos
+				while (repetir) {
+					try {
+						System.out.println("Escribe la información del nuevo contacto");
+						System.out.print("Nombre: >>");
+						nombre = lector.next();
+						System.out.print("\nApellido: >>");
+						apellidos = lector.next();
+						System.out.print("\nTeléfono: >>");
+						telefono = lector.next();
+						
+						if (agregarContacto(nombre,apellidos,telefono)) {
+							System.out.println("Se ha agregado el contacto a la agenda");
+						}else {
+							System.out.println("Este contacto ya está en la agenda");
+						}
+						repetir=false;
+					} catch (Exception e) {
+						System.out.println("Error " + e.getMessage()+"\n Por favor, repite de nuevo");
+					}
 				}
+				
+				
 				break;
 
 			case 2:
@@ -256,8 +304,18 @@ public class AgendaContactosEsqueleto {
 				nombre = lector.next();
 				System.out.print("\n Apellido: >>");
 				apellidos = lector.next();
-				System.out.print("\n Nuevo Teléfono: >>");
-				telefono = lector.next();
+				boolean telefonoOK=false;
+				while(!telefonoOK) {
+					System.out.print("\n Nuevo Teléfono: >>");
+					telefono = lector.next();
+					if (validarTelefono(telefono)) {
+						//teléfono válido. Provocamos la salida del bucle
+						telefonoOK=true;
+					}else {
+						System.out.println("El teléfono no es válido. Por favor, escríbelo de nuevo");
+					}
+				}
+				
 				if (actualizarContacto(nombre,apellidos,telefono)) {
 					System.out.println("Se ha actualizado el teléfono de " +nombre+" "+apellidos);
 				}else {
