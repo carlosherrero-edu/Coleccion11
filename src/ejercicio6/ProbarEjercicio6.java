@@ -1,4 +1,6 @@
 package ejercicio6;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class ProbarEjercicio6 {
@@ -40,11 +42,10 @@ public class ProbarEjercicio6 {
 					System.out.println(alu);
 				}
 				
-		System.out.println("\n Lista ordenada de alumnos suspensos");
+	System.out.println("\n Lista ordenada de alumnos suspensos");
 				for (  Alumno alu:arbolSuspensos){
 					System.out.println(alu);
-		}
-		
+				}	
 		
 		
 		
